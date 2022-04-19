@@ -21,4 +21,12 @@ public class AutorDao implements Dao<Autor>{
     public void excluir(Autor object) throws Exception {
     autores.remove(object);
     }
+
+    public Boolean autorExiste(Autor object) {
+        if(autores.equals(object)) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -48,4 +48,14 @@ public class LivroDao implements Dao<Livro>{
     public void excluir(Livro object) throws Exception {
         livros.remove(object);
     }
+
+    public Boolean livroExiste(Integer codigoLivro) {
+        for(Livro liv : livros) {
+            if(liv.getCodigo() == codigoLivro) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

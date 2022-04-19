@@ -24,4 +24,23 @@ public class AlunoDao implements Dao<Aluno>{
     public void excluir(Aluno object) throws Exception {
         alunos.remove(object);
     }
+
+    public Aluno BuscarPorMatricula(Integer matriculaAluno) {
+        for(Aluno al : alunos) {
+            if(al.getMatricula() == matriculaAluno) {
+                return al;
+            }
+        }
+        return null;
+    }
+
+    public Boolean alunoExiste(Integer matriculaAluno) {
+
+        for(Aluno al : alunos) {
+            if(al.getMatricula() == matriculaAluno) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

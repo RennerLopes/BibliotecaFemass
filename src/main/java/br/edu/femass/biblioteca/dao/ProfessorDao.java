@@ -24,4 +24,23 @@ public class ProfessorDao implements Dao<Professor>{
     public void excluir(Professor object) throws Exception {
         professores.remove(object);
     }
+
+    public Professor buscarPorMatricula(Integer matricula) {
+        for(Professor pr : professores) {
+            if(pr.getMatricula() == matricula) {
+                return pr;
+            }
+        }
+        return null;
+    }
+
+
+    public Boolean professorExiste(Integer matricula) {
+        for(Professor pr : professores) {
+            if(pr.getMatricula() == matricula) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

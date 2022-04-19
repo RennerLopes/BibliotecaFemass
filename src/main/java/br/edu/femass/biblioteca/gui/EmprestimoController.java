@@ -68,6 +68,7 @@ public class EmprestimoController implements Initializable {
 
     private void exibirEmprestimo() {
         Emprestimo emprestimo = LstEmprestimos.getSelectionModel().getSelectedItem();
+        if (emprestimo==null) return;
         TxtMatriculaUsuario.setText(emprestimo.getMatriculaUsuario().toString());
         TxtCodigoCopiaLivro.setText(emprestimo.getCodigoCopiaLivro().toString());
     }
@@ -83,7 +84,13 @@ public class EmprestimoController implements Initializable {
 
         ObservableList<Emprestimo> emprestimosOb = FXCollections.observableArrayList(emprestimos);
         LstEmprestimos.setItems(emprestimosOb);
+    }
 
+    private void ErrorDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
@@ -118,109 +125,60 @@ public class EmprestimoController implements Initializable {
         atualizarLista();
     }
 
+
+
     @FXML
     private void BtnGravarEmprestimo_Action(ActionEvent evento) {
         List<Emprestimo> emprestimos = null;
-        List<Copia> copias = null;
-        Boolean possuiUsuario = false;
-        Boolean possuiCopia = false;
-        Integer qntEmprestimos = 0;
+        Aluno aluno = null;
+        Professor professor = null;
+        Emprestimo emprestimo = emprestimoDao.buscarPorCodigoCopiaLivro(Integer.parseInt(TxtCodigoCopiaLivro.getText()));
 
         Date dt = new Date(System.currentTimeMillis());
         Calendar c = Calendar.getInstance();
         c.setTime(dt);
 
         if(CboTipoUsuario.getSelectionModel().isSelected(0)) {
-            List<Aluno> alunos = null;
-
-            try {
-                alunos = alunoDao.listar();
-            } catch(Exception e) {
-                alunos = new ArrayList<Aluno>();
-            }
-
-            for(Aluno al : alunos) {
-                if(al.getMatricular() == Integer.parseInt(TxtMatriculaUsuario.getText())) {
-                    c.add(Calendar.DATE, al.getPrazoDevolucaoEmDias());
-                    possuiUsuario = true;
+            aluno = alunoDao.BuscarPorMatricula(Integer.parseInt(TxtMatriculaUsuario.getText()));
+                if(aluno != null) {
+                    c.add(Calendar.DATE, aluno.getPrazoDevolucaoEmDias());
                 }
-            }
-
-
 
         } else if(CboTipoUsuario.getSelectionModel().isSelected(1)) {
-            List<Professor> professores = null;
-
-
-            try {
-                professores = professorDao.listar();
-            } catch(Exception e) {
-                professores = new ArrayList<Professor>();
-            }
-
-            for(Professor pr : professores) {
-                if(pr.getMatricular() == Integer.parseInt(TxtMatriculaUsuario.getText())) {
-                    c.add(Calendar.DATE, pr.getPrazoDevolucaoEmDias());
-                    possuiUsuario = true;
+            professor = professorDao.buscarPorMatricula(Integer.parseInt(TxtMatriculaUsuario.getText()));
+                if(professor != null ) {
+                    c.add(Calendar.DATE, professor.getPrazoDevolucaoEmDias());
                 }
-            }
         }
 
-        try {
-            copias = copiaDao.listar();
-        } catch(Exception e) {
-            copias = new ArrayList<Copia>();
-        }
-
-        for(Copia cp : copias) {
-            if(cp.getCodigo() == Integer.parseInt(TxtCodigoCopiaLivro.getText()) && cp.getFixo() != true) {
-                possuiCopia = true;
-            }
-        }
-
-        if(!possuiUsuario) {
+        if(aluno == null && professor == null) {
             ErrorDialog("Usuário Não encontrado!");
             return;
         }
 
-        if(!possuiCopia) {
+        if(copiaDao.buscarPorCodigo(Integer.parseInt(TxtCodigoCopiaLivro.getText())) != null) {
             ErrorDialog("Cópia de livro Não encontrado!");
             return;
         }
 
-
-        try {
-            emprestimos = emprestimoDao.listar();
-        } catch(Exception e) {
-            emprestimos = new ArrayList<Emprestimo>();
+        if(emprestimo == null) {
+            ErrorDialog("Cópia já está emprestada!");
+            return;
         }
 
-        for(Emprestimo emp : emprestimos) {
-            if(emp.getCodigoCopiaLivro() == Integer.parseInt(TxtCodigoCopiaLivro.getText()) && dt.before(emp.getDataDevolucao())) {
-                ErrorDialog("Cópia já está emprestada!");
-                return;
-            }
-
-            if(emp.getMatriculaUsuario() == Integer.parseInt(TxtMatriculaUsuario.getText()) && dt.before(emp.getDataDevolucao())) {
-                qntEmprestimos ++;
-            }
-        }
-
-        if(qntEmprestimos == 5) {
+        if(emprestimoDao.quantidadeEmprestimosUsuario(Integer.parseInt(TxtMatriculaUsuario.getText())) == 5) {
             ErrorDialog("Usuário já possui 5 emprestimos de livros!");
             return;
         }
 
-
-
-        Emprestimo emprestimo = new Emprestimo(
+        Emprestimo emp = new Emprestimo(
                 dt,
                 c.getTime(),
                 Integer.parseInt(TxtMatriculaUsuario.getText()),
                 Integer.parseInt(TxtCodigoCopiaLivro.getText()));
 
         try {
-            emprestimoDao.gravar(emprestimo);
+            emprestimoDao.gravar(emp);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -231,13 +189,6 @@ public class EmprestimoController implements Initializable {
 
         return;
 
-    }
-
-    private void ErrorDialog(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     @FXML

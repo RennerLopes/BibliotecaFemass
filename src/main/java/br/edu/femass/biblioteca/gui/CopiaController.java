@@ -64,6 +64,7 @@ public class CopiaController implements Initializable {
 
     private void exibirLivro() {
         Copia copia = LstCopias.getSelectionModel().getSelectedItem();
+        if (copia==null) return;
         TxtCodigoCopia.setText(copia.getCodigo().toString());
         TxtCodigoLivroCopia.setText(copia.getCodigoLivro().toString());
         CbLivroFixo.setSelected(copia.getFixo());
@@ -81,6 +82,13 @@ public class CopiaController implements Initializable {
         ObservableList<Copia> copiasOb = FXCollections.observableArrayList(copias);
         LstCopias.setItems(copiasOb);
 
+    }
+
+    private void errorDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Dialog");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
@@ -118,48 +126,20 @@ public class CopiaController implements Initializable {
     @FXML
     private void BtnGravarCopia_Action(ActionEvent evento) {
         Copia copia = new Copia();
-        List<Copia> copias = null;
-        List<Livro> livros = null;
-        Boolean possuiCopiaFixa = false;
-        Boolean possuiLivro = false;
 
+        Boolean possuiCopiaFixa = false;
 
         copia.setCodigoLivro(Integer.parseInt(TxtCodigoLivroCopia.getText()));
         copia.setFixo(CbLivroFixo.isSelected());
 
-        try {
-            copias = copiaDao.listar();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        try {
-            livros = livroDao.listar();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if(CbLivroFixo.isSelected() != true) {
-            for(Copia cp : copias) {
-                if(cp.getCodigoLivro() == copia.getCodigoLivro() && cp.getFixo() == true) {
-                    possuiCopiaFixa = true;
-                }
-            }
-        }
-
-        for(Livro liv : livros) {
-            if(liv.getCodigo() == copia.getCodigoLivro()) {
-                possuiLivro = true;
-            }
-        }
-
-        if(!possuiLivro) {
-            ErrorDialog("Livro não encontrado!");
+        if(!livroDao.livroExiste(copia.getCodigoLivro())) {
+            errorDialog("Livro não encontrado!");
             return;
         }
 
-        if(!possuiCopiaFixa && copia.getFixo() != true) {
-            ErrorDialog("A primeira cópia deve ser fixa!");
+        if(!CbLivroFixo.isSelected() && !copiaDao.copiaFixaExiste(copia.getCodigoLivro())) {
+            errorDialog("A primeira cópia deve ser fixa!");
             return;
         }
 
@@ -173,13 +153,6 @@ public class CopiaController implements Initializable {
         atualizarLista();
 
         habilitarInterface(false);
-    }
-
-    private void ErrorDialog(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     @FXML

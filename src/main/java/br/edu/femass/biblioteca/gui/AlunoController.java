@@ -7,10 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
@@ -65,9 +62,10 @@ public class AlunoController implements Initializable {
 
     private void exibirAluno() {
         Aluno aluno = LstAlunos.getSelectionModel().getSelectedItem();
+        if (aluno==null) return;
         TxtNomeAluno.setText(aluno.getNome());
         TxtSobrenomeAluno.setText(aluno.getSobrenome());
-        TxtMatriculaAluno.setText(aluno.getMatricular().toString());
+        TxtMatriculaAluno.setText(aluno.getMatricula().toString());
     }
 
     private void atualizarLista() {
@@ -82,6 +80,13 @@ public class AlunoController implements Initializable {
         ObservableList<Aluno> alunosOb = FXCollections.observableArrayList(alunos);
         LstAlunos.setItems(alunosOb);
 
+    }
+
+    private void errorDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Dialog");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
@@ -119,22 +124,10 @@ public class AlunoController implements Initializable {
     @FXML
     private void BtnGravarAluno_Action(ActionEvent evento) {
         Aluno aluno = new Aluno(TxtNomeAluno.getText(), TxtSobrenomeAluno.getText(), Integer.parseInt(TxtMatriculaAluno.getText()));
-        List<Aluno> alunos = null;
 
-        try {
-            alunos = alunoDao.listar();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        for(Aluno al : alunos) {
-            if(al.getMatricular() == aluno.getMatricular()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Aluno já possue cadastro!");
-                alert.showAndWait();
-                return;
-            }
+        if(alunoDao.alunoExiste(aluno.getMatricula())) {
+            errorDialog("Aluno já possue cadastro!");
+            return;
         }
 
         try {

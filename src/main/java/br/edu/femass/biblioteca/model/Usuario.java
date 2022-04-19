@@ -37,11 +37,11 @@ public class Usuario {
         this.sobrenome = sobrenome;
     }
 
-    public Integer getMatricular() {
+    public Integer getMatricula() {
         return matricula;
     }
 
-    public void setMatricular(Integer matricular) {
+    public void setMatricula(Integer matricular) {
         this.matricula = matricular;
     }
 

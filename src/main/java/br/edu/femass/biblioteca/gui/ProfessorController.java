@@ -3,6 +3,7 @@ package br.edu.femass.biblioteca.gui;
 import br.edu.femass.biblioteca.dao.AlunoDao;
 import br.edu.femass.biblioteca.dao.ProfessorDao;
 import br.edu.femass.biblioteca.model.Aluno;
+import br.edu.femass.biblioteca.model.Genero;
 import br.edu.femass.biblioteca.model.Professor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -67,9 +68,10 @@ public class ProfessorController implements Initializable {
 
     private void exibirAluno() {
         Professor professor = LstProfessores.getSelectionModel().getSelectedItem();
+        if (professor==null) return;
         TxtNomeProfessor.setText(professor.getNome());
         TxtSobrenomeProfessor.setText(professor.getSobrenome());
-        TxtMatriculaProfessor.setText(professor.getMatricular().toString());
+        TxtMatriculaProfessor.setText(professor.getMatricula().toString());
     }
 
     private void atualizarLista() {
@@ -83,7 +85,13 @@ public class ProfessorController implements Initializable {
 
         ObservableList<Professor> professoresOb = FXCollections.observableArrayList(professores);
         LstProfessores.setItems(professoresOb);
+    }
 
+    private void errorDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Dialog");
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
@@ -121,22 +129,11 @@ public class ProfessorController implements Initializable {
     @FXML
     private void BtnGravarProfessor_Action(ActionEvent evento) {
         Professor professor = new Professor(TxtNomeProfessor.getText(), TxtSobrenomeProfessor.getText(), Integer.parseInt(TxtMatriculaProfessor.getText()));
-        List<Professor> professores = null;
 
-        try {
-            professores = professorDao.listar();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        for(Professor pr : professores) {
-            if(pr.getMatricular() == professor.getMatricular()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Professor já possue cadastro!");
-                alert.showAndWait();
-                return;
-            }
+        if(professorDao.professorExiste(professor.getMatricula())) {
+            errorDialog("Professor já possue cadastro!");
+            return;
         }
 
         try {
@@ -146,7 +143,6 @@ public class ProfessorController implements Initializable {
         }
 
         atualizarLista();
-
         habilitarInterface(false);
     }
 

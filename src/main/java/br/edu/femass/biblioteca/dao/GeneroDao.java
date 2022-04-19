@@ -22,4 +22,12 @@ public class GeneroDao implements Dao<Genero>{
     public void excluir(Genero object) throws Exception {
         generos.remove(object);
     }
+
+    public Boolean generoExiste(Genero object) {
+        if(generos.equals(object)) {
+            return true;
+        }
+
+        return false;
+    }
 }

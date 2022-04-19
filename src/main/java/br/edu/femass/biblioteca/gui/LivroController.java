@@ -87,6 +87,7 @@ public class LivroController implements Initializable {
 
     private void exibirLivro() {
         Livro livro = LstLivros.getSelectionModel().getSelectedItem();
+        if (livro==null) return;
         TxtNomeLivro.setText(livro.getNome());
         TxtAnoLivro.setText(livro.getAno().toString());
         TxtEdicaoLivro.setText(livro.getEdicao());
@@ -128,6 +129,7 @@ public class LivroController implements Initializable {
         atualizarLista();
     }
 
+
     @FXML
     private void BtnGravarLivro_Action(ActionEvent evento) {
         Livro livro = new Livro();
@@ -141,21 +143,20 @@ public class LivroController implements Initializable {
         livro.setAutor(autor);
 
         try {
-            livroDao.gravar(livro);
-
-            if(!autorDao.listar().equals(autor)) {
+            if(!autorDao.autorExiste(autor)) {
                 autorDao.gravar(autor);
             }
 
-            if(!generoDao.listar().equals(genero)) {
-                generoDao.gravar(genero);
+            if(!generoDao.generoExiste(genero)) {
+                 generoDao.gravar(genero);
             }
 
+            livroDao.gravar(livro);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        atualizarLista();
 
+        atualizarLista();
         habilitarInterface(false);
     }
 
@@ -181,27 +182,6 @@ public class LivroController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        List<Autor> autores = null;
-//        List<Genero> generos = null;
-//
-//        try {
-//            autores = autorDao.Listar();
-//        } catch(Exception e) {
-//            autores = new ArrayList<Autor>();
-//        }
-//
-//        try {
-//            generos = generoDao.Listar();
-//        } catch(Exception e) {
-//            generos = new ArrayList<Genero>();
-//        }
-//
-//        ObservableList<Autor> autoresOb = FXCollections.observableArrayList(autores);
-//        CboAutorLivro.setItems(autoresOb);
-//
-//        ObservableList<Genero> generosOb = FXCollections.observableArrayList(generos);
-//        CboGeneroLivro.setItems(generosOb);
-
         atualizarLista();
     }
 
