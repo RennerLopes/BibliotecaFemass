@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.femass.biblioteca.gui.CopiaController">
+   <children>
+         <VBox prefHeight="416.0" prefWidth="359.0">
+             <children>
+                 <ListView fx:id="LstCopias" onKeyPressed="#LstCopias_KeyPressed" onMouseClicked="#LstCopias_MouseClicked" prefHeight="346.0" prefWidth="311.0" />
+                 <ButtonBar prefHeight="59.0" prefWidth="296.0">
+                     <buttons>
+                         <Button fx:id="BtnIncluirCopia" mnemonicParsing="false" onAction="#BtnIncluirCopia_Action" prefHeight="38.0" prefWidth="103.0" text="Incluir" />
+                         <Button fx:id="BtnExcluirCopia" mnemonicParsing="false" onAction="#BtnExcluirCopia_Action" prefHeight="38.0" prefWidth="103.0" text="Excluir" />
+                     </buttons>
+                 </ButtonBar>
+             </children>
+             <padding>
+                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+             </padding>
+         </VBox>
+         <VBox prefHeight="416.0" prefWidth="415.0" spacing="32.0">
+             <children>
+                 <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                         <VBox prefHeight="316.0" prefWidth="173.0" spacing="25.0">
+                             <children>
+                                 <Label text="Código" />
+                                 <Label text="Código livro" />
+                                 <Label text="Fixo" />
+                             </children>
+                             <padding>
+                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                             </padding>
+                         </VBox>
+                         <VBox fx:id="FieldsLivros12" fillWidth="false" prefHeight="256.0" prefWidth="258.0" spacing="15.0">
+                             <padding>
+                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                             </padding>
+                             <children>
+                                 <TextField fx:id="TxtCodigoCopia" disable="true" prefHeight="24.0" prefWidth="236.0" />
+                                 <TextField fx:id="TxtCodigoLivroCopia" disable="true" prefHeight="24.0" prefWidth="222.0" />
+                                 <CheckBox fx:id="CbLivroFixo" mnemonicParsing="false" />
+                             </children>
+                         </VBox>
+                     </children>
+                 </HBox>
+                 <ButtonBar prefHeight="59.0" prefWidth="296.0">
+                     <buttons>
+                         <Button fx:id="BtnGravarCopia" disable="true" mnemonicParsing="false" onAction="#BtnGravarCopia_Action" prefHeight="38.0" prefWidth="103.0" text="Gravar" />
+                         <Button fx:id="BtnCancelarCopia" disable="true" mnemonicParsing="false" onAction="#BtnCancelarCopia_Action" prefHeight="38.0" prefWidth="103.0" text="Cancelar" />
+                     </buttons>
+                 </ButtonBar>
+             </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         </VBox>
+   </children>
+</HBox>

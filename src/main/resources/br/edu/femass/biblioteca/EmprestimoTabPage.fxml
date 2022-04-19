@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.femass.biblioteca.gui.EmprestimoController">
+        <children>
+            <VBox prefHeight="416.0" prefWidth="333.0">
+                <children>
+                    <ListView fx:id="LstEmprestimos" onKeyPressed="#LstEmprestimos_KeyPressed" onMouseClicked="#LstEmprestimos_MouseClicked" prefHeight="338.0" prefWidth="302.0" />
+                    <ButtonBar prefHeight="59.0" prefWidth="296.0">
+                        <buttons>
+                            <Button fx:id="BtnIncluirEmprestimo" mnemonicParsing="false" onAction="#BtnIncluirEmprestimo_Action" prefHeight="38.0" prefWidth="103.0" text="Incluir" />
+                            <Button fx:id="BtnExcluirEmprestimo" mnemonicParsing="false" onAction="#BtnExcluirEmprestimo_Action" prefHeight="38.0" prefWidth="103.0" text="Excluir" />
+                        </buttons>
+                    </ButtonBar>
+                </children>
+                <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+            </VBox>
+            <VBox prefHeight="416.0" prefWidth="394.0" spacing="32.0">
+                <children>
+                    <HBox prefHeight="47.0" prefWidth="348.0">
+                        <children>
+                            <VBox prefHeight="83.0" prefWidth="171.0" spacing="25.0">
+                                <children>
+                                    <Label text="Tipo usuario" />
+                                    <Label text="Matricula Usuario" />
+                                    <Label text="Codigo copia livro" />
+                                </children>
+                                <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                </padding>
+                            </VBox>
+                            <VBox fx:id="FieldsLivros111" fillWidth="false" prefHeight="83.0" prefWidth="225.0" spacing="15.0">
+                                <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                </padding>
+                                <children>
+                                    <ComboBox fx:id="CboTipoUsuario" disable="true" prefHeight="24.0" prefWidth="237.0" />
+                                    <TextField fx:id="TxtMatriculaUsuario" disable="true" prefHeight="24.0" prefWidth="200.0" />
+                                    <TextField fx:id="TxtCodigoCopiaLivro" disable="true" prefHeight="24.0" prefWidth="200.0" />
+                                </children>
+                            </VBox>
+                        </children>
+                    </HBox>
+                    <ButtonBar prefHeight="59.0" prefWidth="296.0">
+                        <buttons>
+                            <Button fx:id="BtnGravarEmprestimo" disable="true" mnemonicParsing="false" onAction="#BtnGravarEmprestimo_Action" prefHeight="38.0" prefWidth="103.0" text="Gravar" />
+                            <Button fx:id="BtnCancelarEmprestimo" disable="true" mnemonicParsing="false" onAction="#BtnCancelarEmprestimo_Action" prefHeight="38.0" prefWidth="103.0" text="Cancelar" />
+                        </buttons>
+                    </ButtonBar>
+                </children>
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+            </VBox>
+        </children>
+    </HBox>

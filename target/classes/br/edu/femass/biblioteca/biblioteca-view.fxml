@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane prefHeight="447.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane prefHeight="447.0" prefWidth="717.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="70.0">
+        <tabs>
+          <Tab text="Livro">
+               <content>
+                  <fx:include fx:id="LivroTabPage" source="LivroTabPage.fxml" />
+               </content>
+            </Tab>
+            <Tab  text="Copia">
+               <content>
+                  <fx:include fx:id="CopiaTabPage" source="CopiaTabPage.fxml" />
+               </content>
+            </Tab>
+            <Tab fx:id="UsuariosTabPage"  text="Usuários">
+               <content>
+                   <TabPane tabClosingPolicy="UNAVAILABLE">
+                       <tabs>
+                           <Tab text="Alunos">
+                               <content>
+                                   <fx:include fx:id="AlunoTabPage" source="AlunoTabPage.fxml" />
+                               </content>
+                           </Tab>
+                           <Tab  text="Professores">
+                               <content>
+                                   <fx:include fx:id="ProfessorTabPage" source="ProfessorTabPage.fxml" />
+                               </content>
+                           </Tab>
+                       </tabs>
+                   </TabPane>
+               </content>
+            </Tab>
+            <Tab  text="Emprestimo">
+               <content>
+                  <fx:include fx:id="EmprestimoTabPage" source="EmprestimoTabPage.fxml" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</Pane>

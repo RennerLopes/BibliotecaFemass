@@ -1,0 +1,10 @@
+/home/rennerlopes/IdeaProjects/Biblioteca/src/main/java/br/edu/femass/biblioteca/dao/AutorDao.java
+/home/rennerlopes/IdeaProjects/Biblioteca/src/main/java/br/edu/femass/biblioteca/dao/GeneroDao.java
+/home/rennerlopes/IdeaProjects/Biblioteca/src/main/java/br/edu/femass/biblioteca/gui/LivroController.java
+/home/rennerlopes/IdeaProjects/Biblioteca/src/main/java/br/edu/femass/biblioteca/model/Livro.java
+/home/rennerlopes/IdeaProjects/Biblioteca/src/main/java/module-info.java
+/home/rennerlopes/IdeaProjects/Biblioteca/src/main/java/br/edu/femass/biblioteca/model/Autor.java
+/home/rennerlopes/IdeaProjects/Biblioteca/src/main/java/br/edu/femass/biblioteca/dao/Dao.java
+/home/rennerlopes/IdeaProjects/Biblioteca/src/main/java/br/edu/femass/biblioteca/model/Genero.java
+/home/rennerlopes/IdeaProjects/Biblioteca/src/main/java/br/edu/femass/biblioteca/dao/LivroDao.java
+/home/rennerlopes/IdeaProjects/Biblioteca/src/main/java/br/edu/femass/biblioteca/HelloApplication.java

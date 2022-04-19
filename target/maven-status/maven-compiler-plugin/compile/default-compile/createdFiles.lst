@@ -1,0 +1,10 @@
+br/edu/femass/biblioteca/dao/GeneroDao.class
+module-info.class
+br/edu/femass/biblioteca/model/Autor.class
+br/edu/femass/biblioteca/HelloApplication.class
+br/edu/femass/biblioteca/dao/AutorDao.class
+br/edu/femass/biblioteca/model/Genero.class
+br/edu/femass/biblioteca/gui/LivroController.class
+br/edu/femass/biblioteca/model/Livro.class
+br/edu/femass/biblioteca/dao/Dao.class
+br/edu/femass/biblioteca/dao/LivroDao.class
