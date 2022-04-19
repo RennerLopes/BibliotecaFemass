@@ -161,7 +161,7 @@ public class EmprestimoController implements Initializable {
             return;
         }
 
-        if(emprestimo == null) {
+        if(emprestimo != null) {
             ErrorDialog("Cópia já está emprestada!");
             return;
         }

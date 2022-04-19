@@ -26,7 +26,7 @@ public class CopiaDao implements Dao<Copia>  {
 
     public Copia buscarPorCodigo(Integer codigoCopiaLivro) {
         for(Copia cp : copias) {
-            if(cp.getCodigoLivro() == codigoCopiaLivro && cp.getFixo() == true) {
+            if(cp.getCodigo() == codigoCopiaLivro && cp.getFixo() == true) {
                 return cp;
             }
         }
